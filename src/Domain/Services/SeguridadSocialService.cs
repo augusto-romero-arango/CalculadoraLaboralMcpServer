@@ -22,7 +22,22 @@ public abstract class SeguridadSocial
         _salarioMinimo = salarioMinimo;
     }
 
-    protected decimal BaseCalculo => Math.Max(_totalPrestacional, _salarioMinimo);
+    protected decimal BaseCalculo 
+    {
+        get
+        {
+            // Implementación Ley 1393
+            var base1393 = _totalDevengado * 0.6m;
+            var ajuste1393 = base1393 > _totalSalarial ? base1393 - _totalSalarial : 0;
+            var baseCalculoLey1393 = ajuste1393 + _totalPrestacional;
+            
+            // Aplicar tope de 25 SMLV
+            var baseConTope = Math.Min(baseCalculoLey1393, _salarioMinimo * 25);
+            
+            // Garantizar mínimo de salario mínimo
+            return Math.Max(baseConTope, _salarioMinimo);
+        }
+    }
 }
 
 public class SeguridadSocialSalud : SeguridadSocial
@@ -77,7 +92,20 @@ public abstract class Parafiscales
         _salarioMinimo = salarioMinimo;
     }
 
-    protected decimal BaseCalculo => Math.Max(_totalPrestacional, _salarioMinimo);
+    protected decimal BaseCalculo 
+    {
+        get
+        {
+            // Exoneración para ingresos < 10 SMLV
+            var topeExoneracion = _salarioMinimo * 10;
+            if (_totalDevengado < topeExoneracion)
+            {
+                return 0; // Exonerado de parafiscales
+            }
+            
+            return Math.Max(_totalPrestacional, _salarioMinimo);
+        }
+    }
 }
 
 public class ParafiscalesCajaCompensacion : Parafiscales

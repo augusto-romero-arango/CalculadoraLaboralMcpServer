@@ -26,7 +26,7 @@ public class Prima : PrestacionSocial
 {
     public override string Nombre => "Prima";
     public override string Descripcion => "Prima de servicios";
-    public override decimal Valor => Math.Round(BaseCalculo / 12, 2, MidpointRounding.AwayFromZero);
+    public override decimal Valor => _esSalarioIntegral ? 0 : Math.Round(BaseCalculo / 12, 2, MidpointRounding.AwayFromZero);
 
     public Prima(decimal totalSalarial, decimal auxilioTransporte, bool esSalarioIntegral)
         : base(totalSalarial, auxilioTransporte, esSalarioIntegral) { }
@@ -36,7 +36,7 @@ public class Cesantia : PrestacionSocial
 {
     public override string Nombre => "Cesantías";
     public override string Descripcion => "Cesantías";
-    public override decimal Valor => Math.Round(BaseCalculo / 12, 2, MidpointRounding.AwayFromZero);
+    public override decimal Valor => _esSalarioIntegral ? 0 : Math.Round(BaseCalculo / 12, 2, MidpointRounding.AwayFromZero);
 
     public Cesantia(decimal totalSalarial, decimal auxilioTransporte, bool esSalarioIntegral)
         : base(totalSalarial, auxilioTransporte, esSalarioIntegral) { }
@@ -56,7 +56,7 @@ public class InteresCesantia : PrestacionSocial
 {
     public override string Nombre => "Intereses de Cesantías";
     public override string Descripcion => "Intereses sobre cesantías";
-    public override decimal Valor => Math.Round(BaseCalculo * 0.12m / 12, 2, MidpointRounding.AwayFromZero);
+    public override decimal Valor => _esSalarioIntegral ? 0 : Math.Round(BaseCalculo * 0.12m / 12, 2, MidpointRounding.AwayFromZero);
 
     public InteresCesantia(decimal totalSalarial, decimal auxilioTransporte, bool esSalarioIntegral)
         : base(totalSalarial, auxilioTransporte, esSalarioIntegral) { }
