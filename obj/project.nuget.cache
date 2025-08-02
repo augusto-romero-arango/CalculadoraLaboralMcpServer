@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5y8tyqp6Y68=",
+  "dgSpecHash": "xy3zowynk1E=",
   "success": true,
-  "projectFilePath": "z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj",
+  "projectFilePath": "Z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\augro\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.0\\microsoft.extensions.configuration.9.0.0.nupkg.sha512",
     "C:\\Users\\augro\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.0\\microsoft.extensions.configuration.abstractions.9.0.0.nupkg.sha512",

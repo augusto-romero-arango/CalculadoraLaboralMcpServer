@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj": {}
+    "Z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj": {}
   },
   "projects": {
-    "z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj": {
+    "Z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj",
+        "projectUniqueName": "Z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj",
         "projectName": "calculadoraLaboral.McpServer",
-        "projectPath": "z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj",
+        "projectPath": "Z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\calculadoraLaboral.McpServer.csproj",
         "packagesPath": "C:\\Users\\augro\\.nuget\\packages\\",
-        "outputPath": "z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\obj\\",
+        "outputPath": "Z:\\Experimentos\\calculadoraLaboral\\calculadoraLaboral.McpServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\augro\\AppData\\Roaming\\NuGet\\NuGet.Config"

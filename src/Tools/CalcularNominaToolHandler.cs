@@ -126,13 +126,14 @@ public class CalcularNominaToolHandler : IToolHandler
             request.TipoSalario = tipoSalario.GetString() ?? "Ordinario";
 
         if (arguments.TryGetProperty("fecha", out var fecha))
+        {
             var fechaStr = fecha.GetString();
             if (!DateTime.TryParse(fechaStr, out var fechaParsed))
             {
-                // Si no se puede parsear, usar la fecha actual o lanzar una excepción personalizada si lo prefieres
                 fechaParsed = DateTime.Now;
             }
             request.Fecha = fechaParsed;
+        }
 
         if (arguments.TryGetProperty("viveCercaAlTrabajo", out var viveCerca))
             request.ViveCercaAlTrabajo = viveCerca.GetBoolean();
@@ -170,20 +171,20 @@ public class CalcularNominaToolHandler : IToolHandler
         }
 
         return request;
-        if (!Enum.TryParse<ClasesDeRiesgo>(request.ClaseRiesgoLaboral, out var claseRiesgo))
-            throw new ArgumentException($"Valor inválido para ClaseRiesgoLaboral: {request.ClaseRiesgoLaboral}");
+    }
 
     private async Task<object> CalcularNominaAsync(CalcularNominaRequest request)
+    {
         // Convertir tipos de string a enum con manejo de errores
         if (!Enum.TryParse<TipoSalario>(request.TipoSalario, out var tipoSalario))
         {
             throw new ArgumentException($"TipoSalario inválido: {request.TipoSalario}");
         }
+        
         if (!Enum.TryParse<ClasesDeRiesgo>(request.ClaseRiesgoLaboral, out var claseRiesgo))
         {
             throw new ArgumentException($"ClaseRiesgoLaboral inválido: {request.ClaseRiesgoLaboral}");
         }
-        var claseRiesgo = Enum.Parse<ClasesDeRiesgo>(request.ClaseRiesgoLaboral);
 
         // Crear el servicio de liquidación
         var liquidacion = new LiquidacionNominaService(
@@ -225,6 +226,8 @@ public class CalcularNominaToolHandler : IToolHandler
 
         // Realizar liquidación
         var resumen = liquidacion.Liquidar();
+
+        await Task.CompletedTask;
 
         return new
         {
