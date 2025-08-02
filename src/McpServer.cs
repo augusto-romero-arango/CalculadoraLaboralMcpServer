@@ -34,10 +34,7 @@ public class McpServer
                 var response = await ProcessRequestAsync(input);
                 if (response != null)
                 {
-                    var responseJson = JsonSerializer.Serialize(response, new JsonSerializerOptions
-                    {
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                    });
+                    var responseJson = JsonSerializer.Serialize(response);
                     await Console.Out.WriteLineAsync(responseJson);
                     await Console.Out.FlushAsync();
                 }
@@ -53,10 +50,7 @@ public class McpServer
     {
         try
         {
-            var request = JsonSerializer.Deserialize<JsonRpcRequest>(input, new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+            var request = JsonSerializer.Deserialize<JsonRpcRequest>(input);
 
             if (request == null)
             {
@@ -166,7 +160,6 @@ public class McpServer
                             type = "text",
                             text = JsonSerializer.Serialize(result, new JsonSerializerOptions 
                             { 
-                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                                 WriteIndented = true 
                             })
                         }

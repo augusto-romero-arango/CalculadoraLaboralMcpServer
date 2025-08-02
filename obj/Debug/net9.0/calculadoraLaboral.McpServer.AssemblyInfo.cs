@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("calculadoraLaboral.McpServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc847a3031ee0f0464f92233323543c7943551f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7fac34a0fc5958481a7d5c0cdcbc658e744860d2")]
 [assembly: System.Reflection.AssemblyProductAttribute("calculadoraLaboral.McpServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("calculadoraLaboral.McpServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
