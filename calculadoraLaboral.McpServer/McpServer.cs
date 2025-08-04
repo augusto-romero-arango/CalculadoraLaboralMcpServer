@@ -15,7 +15,8 @@ public class McpServer
         _logger = logger;
         _toolHandlers = new Dictionary<string, IToolHandler>
         {
-            { "calcular_nomina", new CalcularNominaToolHandler() }
+            { "calcular_nomina", new CalcularNominaToolHandler() },
+            { "obtener_parametros_laborales", new ParametrosLaboralesToolHandler() }
         };
     }
 
