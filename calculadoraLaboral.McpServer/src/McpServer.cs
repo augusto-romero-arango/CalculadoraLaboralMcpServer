@@ -21,28 +21,34 @@ public class McpServer
 
     public async Task RunAsync()
     {
-        _logger.LogInformation("Iniciando servidor MCP Calculadora Laboral...");
-        
         try
         {
             while (true)
             {
                 var input = await Console.In.ReadLineAsync();
-                if (input == null || string.IsNullOrWhiteSpace(input))
+                if (input == null)
                     break;
+
+                if (string.IsNullOrWhiteSpace(input))
+                    continue;
 
                 var response = await ProcessRequestAsync(input);
                 if (response != null)
                 {
-                    var responseJson = JsonSerializer.Serialize(response);
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                        WriteIndented = false
+                    };
+                    var responseJson = JsonSerializer.Serialize(response, options);
                     await Console.Out.WriteLineAsync(responseJson);
                     await Console.Out.FlushAsync();
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logger.LogError(ex, "Error en el servidor MCP");
+            // Silenciar errores para evitar interferencia con JSON-RPC
         }
     }
 
@@ -57,24 +63,22 @@ public class McpServer
                 return CreateErrorResponse(null, JsonRpcErrorCodes.InvalidRequest, "Invalid request format");
             }
 
-            _logger.LogDebug("Procesando método: {Method}", request.Method);
 
             return request.Method switch
             {
                 "initialize" => await HandleInitializeAsync(request),
+                "notifications/initialized" => null, // Notification, no response needed
                 "tools/list" => await HandleToolsListAsync(request),
                 "tools/call" => await HandleToolCallAsync(request),
                 _ => CreateErrorResponse(request.Id, JsonRpcErrorCodes.MethodNotFound, $"Method '{request.Method}' not found")
             };
         }
-        catch (JsonException ex)
+        catch (JsonException)
         {
-            _logger.LogError(ex, "Error parsing JSON request");
             return CreateErrorResponse(null, JsonRpcErrorCodes.ParseError, "Parse error");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logger.LogError(ex, "Internal error processing request");
             return CreateErrorResponse(null, JsonRpcErrorCodes.InternalError, "Internal error");
         }
     }
@@ -158,10 +162,7 @@ public class McpServer
                         new
                         {
                             type = "text",
-                            text = JsonSerializer.Serialize(result, new JsonSerializerOptions 
-                            { 
-                                WriteIndented = true 
-                            })
+                            text = result
                         }
                     }
                 }
@@ -169,7 +170,6 @@ public class McpServer
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error executing tool");
             return CreateErrorResponse(request.Id, JsonRpcErrorCodes.InternalError, $"Tool execution error: {ex.Message}");
         }
     }

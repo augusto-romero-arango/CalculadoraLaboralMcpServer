@@ -102,16 +102,24 @@ public class CalcularNominaToolHandler : IToolHandler
         {
             var request = ParseRequest(arguments);
             var resultado = await CalcularNominaAsync(request);
-            return resultado;
+            return JsonSerializer.Serialize(resultado, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
         }
         catch (Exception ex)
         {
-            return new
+            return JsonSerializer.Serialize(new
             {
                 error = true,
                 message = ex.Message,
                 details = ex.ToString()
-            };
+            }, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
         }
     }
 

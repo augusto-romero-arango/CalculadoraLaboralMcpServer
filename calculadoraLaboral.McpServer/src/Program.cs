@@ -5,10 +5,9 @@ using Microsoft.Extensions.Logging;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-// Configurar logging
+// Deshabilitar completamente el logging para evitar interferencia con JSON-RPC
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.SetMinimumLevel(LogLevel.Warning); // Solo errores y warnings para no interferir con JSON-RPC
+builder.Logging.SetMinimumLevel(LogLevel.None);
 
 // Configurar servicios
 builder.Services.AddSingleton<McpServer>();
