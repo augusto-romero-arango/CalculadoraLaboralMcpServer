@@ -5,10 +5,10 @@ namespace CalculadoraLaboral.McpServer.Domain.Services;
 
 public class LiquidacionNominaService
 {
-    private SalarioService _salarioService;
-    private RemuneracionService _remuneracionService;
-    private AuxilioTransporteService _auxilioTransporteService;
-    private HorasExtrasService _horasExtrasService;
+    private readonly SalarioService _salarioService;
+    private RemuneracionService _remuneracionService = null!;
+    private AuxilioTransporteService _auxilioTransporteService = null!;
+    private HorasExtrasService _horasExtrasService = null!;
     private decimal _factorRiesgoLaboral;
     private ClasesDeRiesgo _clasesDeRiesgo;
 
