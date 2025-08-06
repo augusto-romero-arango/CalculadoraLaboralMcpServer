@@ -16,7 +16,8 @@ public class McpServer
         _toolHandlers = new Dictionary<string, IToolHandler>
         {
             { "calcular_nomina", new CalcularNominaToolHandler() },
-            { "obtener_parametros_laborales", new ParametrosLaboralesToolHandler() }
+            { "obtener_parametros_laborales", new ParametrosLaboralesToolHandler() },
+            { "calcular_horas_extras", new HorasExtrasToolHandler() }
         };
     }
 
