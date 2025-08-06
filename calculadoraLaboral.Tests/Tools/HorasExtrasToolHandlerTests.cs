@@ -1,17 +1,11 @@
 using System.Text.Json;
 using CalculadoraLaboral.McpServer.Tools;
-using CalculadoraLaboral.McpServer.Domain.Models;
 
 namespace CalculadoraLaboral.Tests.Tools;
 
 public class HorasExtrasToolHandlerTests
 {
-    private readonly HorasExtrasToolHandler _handler;
-
-    public HorasExtrasToolHandlerTests()
-    {
-        _handler = new HorasExtrasToolHandler();
-    }
+    private readonly HorasExtrasToolHandler _handler = new();
 
     [Fact]
     public void Name_DebeRetornarNombreCorrecto()

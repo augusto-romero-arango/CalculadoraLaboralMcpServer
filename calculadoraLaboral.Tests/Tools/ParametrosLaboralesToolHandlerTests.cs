@@ -1,17 +1,11 @@
 using System.Text.Json;
 using CalculadoraLaboral.McpServer.Tools;
-using Xunit;
 
 namespace CalculadoraLaboral.Tests.Tools;
 
 public class ParametrosLaboralesToolHandlerTests
 {
-    private readonly ParametrosLaboralesToolHandler _handler;
-
-    public ParametrosLaboralesToolHandlerTests()
-    {
-        _handler = new ParametrosLaboralesToolHandler();
-    }
+    private readonly ParametrosLaboralesToolHandler _handler = new();
 
     [Fact]
     public void Name_DebeRetornarNombreCorrect()
@@ -37,15 +31,15 @@ public class ParametrosLaboralesToolHandlerTests
         Assert.Equal("object", typeProperty.GetString());
 
         Assert.True(schemaElement.TryGetProperty("properties", out var propertiesProperty));
-        Assert.True(propertiesProperty.TryGetProperty("año", out var añoProperty));
+        Assert.True(propertiesProperty.TryGetProperty("anio", out var anioProperty));
         
-        Assert.True(añoProperty.TryGetProperty("type", out var añoType));
-        Assert.Equal("number", añoType.GetString());
+        Assert.True(anioProperty.TryGetProperty("type", out var anioType));
+        Assert.Equal("number", anioType.GetString());
         
-        Assert.True(añoProperty.TryGetProperty("minimum", out var minimumProperty));
+        Assert.True(anioProperty.TryGetProperty("minimum", out var minimumProperty));
         Assert.Equal(2022, minimumProperty.GetInt32());
         
-        Assert.True(añoProperty.TryGetProperty("maximum", out var maximumProperty));
+        Assert.True(anioProperty.TryGetProperty("maximum", out var maximumProperty));
         Assert.Equal(2026, maximumProperty.GetInt32());
     }
 
@@ -55,14 +49,14 @@ public class ParametrosLaboralesToolHandlerTests
     [InlineData(2024, 1_300_000, 162_000, 230)]  // Dic 31, 2024: después de jul 15, 2024, antes de jul 15, 2025
     [InlineData(2025, 1_423_500, 200_000, 220)]  // Dic 31, 2025: después de jul 15, 2025, antes de jul 15, 2026
     [InlineData(2026, 1_423_500, 200_000, 210)]  // Dic 31, 2026: después de jul 15, 2026
-    public async Task HandleAsync_ConAñoEspecífico_DebeRetornarParametrosCorrectos(
-        int año, 
+    public async Task HandleAsync_ConAnioEspecífico_DebeRetornarParametrosCorrectos(
+        int anio, 
         decimal salarioMinimoEsperado, 
         decimal auxilioTransporteEsperado, 
         int horasJornadaEsperadas)
     {
         // Arrange
-        var arguments = JsonSerializer.Deserialize<JsonElement>($"{{\"año\": {año}}}");
+        var arguments = JsonSerializer.Deserialize<JsonElement>($"{{\"año\": {anio}}}");
 
         // Act
         var result = await _handler.HandleAsync(arguments);
@@ -73,8 +67,8 @@ public class ParametrosLaboralesToolHandlerTests
         Assert.True(resultJson.TryGetProperty("success", out var successProperty));
         Assert.True(successProperty.GetBoolean());
 
-        Assert.True(resultJson.TryGetProperty("año", out var añoProperty));
-        Assert.Equal(año, añoProperty.GetInt32());
+        Assert.True(resultJson.TryGetProperty("anio", out var anioProperty));
+        Assert.Equal(anio, anioProperty.GetInt32());
 
         Assert.True(resultJson.TryGetProperty("data", out var dataProperty));
         
@@ -95,11 +89,11 @@ public class ParametrosLaboralesToolHandlerTests
     }
 
     [Fact]
-    public async Task HandleAsync_SinArgumentos_DebeUsarAñoActual()
+    public async Task HandleAsync_SinArgumentos_DebeUsarAnioActual()
     {
         // Arrange
         var arguments = JsonSerializer.Deserialize<JsonElement>("{}");
-        var añoActual = DateTime.Now.Year;
+        var anioActual = DateTime.Now.Year;
 
         // Act
         var result = await _handler.HandleAsync(arguments);
@@ -110,12 +104,12 @@ public class ParametrosLaboralesToolHandlerTests
         Assert.True(resultJson.TryGetProperty("success", out var successProperty));
         Assert.True(successProperty.GetBoolean());
 
-        Assert.True(resultJson.TryGetProperty("año", out var añoProperty));
-        Assert.Equal(añoActual, añoProperty.GetInt32());
+        Assert.True(resultJson.TryGetProperty("anio", out var anioProperty));
+        Assert.Equal(anioActual, anioProperty.GetInt32());
     }
 
     [Fact]
-    public async Task HandleAsync_ConAñoInválido_DebeRetornarError()
+    public async Task HandleAsync_ConAnioInválido_DebeRetornarError()
     {
         // Arrange
         var arguments = JsonSerializer.Deserialize<JsonElement>("{\"año\": 2021}");
@@ -188,10 +182,10 @@ public class ParametrosLaboralesToolHandlerTests
     [InlineData(2025, 1_423_500)]
     [InlineData(2024, 1_300_000)]
     [InlineData(2023, 1_160_000)]
-    public async Task HandleAsync_CalculoSalarioIntegral_DebeSerCorrect(int año, decimal salarioMinimo)
+    public async Task HandleAsync_CalculoSalarioIntegral_DebeSerCorrect(int anio, decimal salarioMinimo)
     {
         // Arrange
-        var arguments = JsonSerializer.Deserialize<JsonElement>($"{{\"año\": {año}}}");
+        var arguments = JsonSerializer.Deserialize<JsonElement>($"{{\"año\": {anio}}}");
 
         // Act
         var result = await _handler.HandleAsync(arguments);
@@ -259,8 +253,8 @@ public class ParametrosLaboralesToolHandlerTests
         var resultJson = JsonSerializer.Deserialize<JsonElement>(resultString!);
 
         // Assert - Verificar que el año devuelto es 2023, no el año actual (2025)
-        Assert.True(resultJson.TryGetProperty("año", out var añoProperty));
-        Assert.Equal(2023, añoProperty.GetInt32());
+        Assert.True(resultJson.TryGetProperty("anio", out var anioProperty));
+        Assert.Equal(2023, anioProperty.GetInt32());
         
         // Verificar que los datos corresponden a 2023
         Assert.True(resultJson.TryGetProperty("data", out var dataProperty));
